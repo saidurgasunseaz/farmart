@@ -34,7 +34,7 @@ jobs:
       - name: Installing Node dependencies
         run: |
           npm install
-          npm run build
+          # npm run build
 
       # ✅ Deploy to Second Server (e.g., production/live)
       # - name: Deploy to FTP Server 2 (Live)
