@@ -1,16 +1,27 @@
 
 @php
 $name = Str::contains($name = $menu['name'], '::') ? BaseHelper::clean(trans($name)) : $name;
+ $rawName = $menu['name'];
+$lowerName = Str::lower($rawName);
+  $isEcommerceReport = Str::contains($lowerName, 'ecommerce') &&
+                         Str::contains($lowerName, 'report');
+$isEcommerceProductInventory =
+        Str::contains($lowerName, 'ecommerce') &&
+        (Str::contains($lowerName, 'product-inventory') ||
+         Str::contains($lowerName, 'inventory'));
 @endphp
-{{-- @if (
+@if (
     Str::lower($name) != 'pages' &&
     Str::lower($name) != 'ads' &&
     Str::lower($name) != 'simple sliders' &&
     Str::lower($name) != 'media' &&
    Str::lower($name) != 'plugins' &&
    Str::lower($name) != 'blog' &&
-   Str::lower($name) != 'appearance'
-) --}}
+   Str::lower($name) != 'appearance' &&
+     ! $isEcommerceShipments &&
+     !$isEcommerceProductInventory
+)
+
 <a
     @class([ 'nav-link'=> $isNav = $isNav ?? true,
     'dropdown-item' => !$isNav,
@@ -39,4 +50,4 @@ $name = Str::contains($name = $menu['name'], '::') ? BaseHelper::clean(trans($na
         {!! apply_filters(BASE_FILTER_APPEND_MENU_NAME, null, $menu['id']) !!}
     </span>
 </a>
-{{-- @endif --}}
+@endif

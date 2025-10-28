@@ -111,7 +111,7 @@ $products->loadMissing('defaultVariation');
                                                 </div>
 
                                                 <h4><a href="{{url('product/'.$product->slug)}}"><?php echo  $product->name ; ?></a></h4>
-                                                <div class="price">{{$product->price}}</div>
+                                                <div class="price"> <i class="fa-solid fa-indian-rupee-sign"></i> {{$product->price}}.00</div>
                                             </div>
                                             @endforeach
                                             

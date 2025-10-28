@@ -12,7 +12,8 @@
     <div class="service-block_two-inner">
         <div class="service-block_two-image">
             <div class="product-card__badge-list">
-                <on-sale-badge discount-mode="percentage" class="badge badge--on-sale">
+                <on-sale-badge discount-mode="percentage" class="badge badge--on-sale" style=" background: none !important;
+        border: 0px;">
                     @if ($product->isOutOfStock())
                     <span class="ribbon out-stock">{{ __('Out Of Stock') }}</span>
                     @else
@@ -64,7 +65,7 @@
             <div class="service-block_two-price-rating">
                 <div class="service-block_two-price">
                     <strong>
-                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                        {{-- <i class="fa-solid fa-indian-rupee-sign"></i> --}}
                         {{ format_price($product->front_sale_price_with_taxes) }}
                     </strong>
                     @if ($product->front_sale_price != $product->price)

@@ -1,5 +1,4 @@
-{{-- @if(in_array($title, ['Admin appearance', 'Roles And Permissions', 'Activity Logs', 'Products', 'Customers', 'Orders', 'Users', 'Security Settings', 'General', 'Products', 'Return', 'Invoices', 'Shipping', 'Flash Sale', 'Blog', ]))
-@endif --}}
+@if(in_array($title, ['Admin appearance', 'Roles And Permissions', 'Activity Logs', 'Products', 'Customers', 'Orders', 'Users', 'Security Settings', 'General', 'Products', 'Return', 'Invoices', 'Shipping', 'Flash Sale', 'Blog', ]))
 <div
     id="panel-section-item-{{ $sectionId }}-{{ $id }}"
     data-priority="{{ $priority }}"
@@ -33,3 +32,4 @@
 </div>
 
 
+@endif
