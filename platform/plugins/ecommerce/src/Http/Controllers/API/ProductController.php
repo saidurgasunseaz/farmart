@@ -283,22 +283,22 @@ class ProductController extends BaseApiController
             }
 
             // Calculate next variation IDs for the next attribute set
-            foreach ($productAttributes->where('attribute_set_id', $set->id) as $attribute) {
-                // Only consider selected attributes for this set when calculating next variations
-                if (in_array($attribute->id, $selectedAttributeIds)) {
-                    $variationIds = $productVariationsInfo
-                        ->where('attribute_set_id', $set->id)
-                        ->where('id', $attribute->id)
-                        ->pluck('variation_id')
-                        ->toArray();
+            // foreach ($productAttributes->where('attribute_set_id', $set->id) as $attribute) {
+            //     // Only consider selected attributes for this set when calculating next variations
+            //     if (in_array($attribute->id, $selectedAttributeIds)) {
+            //         $variationIds = $productVariationsInfo
+            //             ->where('attribute_set_id', $set->id)
+            //             ->where('id', $attribute->id)
+            //             ->pluck('variation_id')
+            //             ->toArray();
 
-                    if ($key == 0) {
-                        $variationNextIds = $variationIds;
-                    } else {
-                        $variationNextIds = array_intersect($variationNextIds, $variationIds);
-                    }
-                }
-            }
+            //         if ($key == 0) {
+            //             $variationNextIds = $variationIds;
+            //         } else {
+            //             $variationNextIds = array_intersect($variationNextIds, $variationIds);
+            //         }
+            //     }
+            // }
 
             // If no attributes are selected for this set, use all variations
             if ($key == 0 && empty($variationNextIds)) {

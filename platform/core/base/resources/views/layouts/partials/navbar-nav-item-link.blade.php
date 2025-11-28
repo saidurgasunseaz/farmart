@@ -1,53 +1,59 @@
-
 @php
-$name = Str::contains($name = $menu['name'], '::') ? BaseHelper::clean(trans($name)) : $name;
- $rawName = $menu['name'];
-$lowerName = Str::lower($rawName);
-  $isEcommerceReport = Str::contains($lowerName, 'ecommerce') &&
-                         Str::contains($lowerName, 'report');
-$isEcommerceProductInventory =
-        Str::contains($lowerName, 'ecommerce') &&
-        (Str::contains($lowerName, 'product-inventory') ||
-         Str::contains($lowerName, 'inventory'));
-@endphp
-@if (
-    Str::lower($name) != 'pages' &&
-    Str::lower($name) != 'ads' &&
-    Str::lower($name) != 'simple sliders' &&
-    Str::lower($name) != 'media' &&
-   Str::lower($name) != 'plugins' &&
-   Str::lower($name) != 'blog' &&
-   Str::lower($name) != 'appearance' &&
-     ! $isEcommerceShipments &&
-     !$isEcommerceProductInventory
-)
+    $name = Str::contains($name = $menu['name'], '::') ? BaseHelper::clean(trans($name)) : $name;
+    $rawName = $menu['name'];
+    $lowerName = Str::lower($rawName);
+    $isEcommerceReport = Str::contains($lowerName, 'ecommerce') && Str::contains($lowerName, 'report');
+    $isEcommerceOptions = Str::contains($lowerName, 'plugins/ecommerce::product-option');
+    $isEcommerceCollection = Str::contains($lowerName, 'plugins/ecommerce::product-collections');
+    $isEcommercebrands = Str::contains($lowerName, 'plugins/ecommerce::brands');
+    $isEcommerceFlashsale = Str::contains($lowerName, 'plugins/ecommerce::flash-sale');
+    $isEcommerceDiscounts = Str::contains($lowerName, 'plugins/ecommerce::discount');
+      $isEcommerceProductAttributes = Str::contains($lowerName, 'plugins/ecommerce::product-attributes');
 
-<a
-    @class([ 'nav-link'=> $isNav = $isNav ?? true,
-    'dropdown-item' => !$isNav,
-    'dropdown-toggle' => $hasChildren,
-    'nav-priority-' . $menu['priority'],
-    'active show' => $menu['active'],
-    ])
-    href="{{ $hasChildren ? "#$menu[id]" : $menu['url'] }}"
-    id="{{ $menu['id'] }}"
-    @if ($hasChildren)
-    data-bs-toggle="dropdown"
+     $isContactMenu =Str::contains($lowerName, 'contact::Custom Fields');
+$isEcommercetags = Str::contains($lowerName, 'plugins/ecommerce::product-tag');
+    $isEcommerceProductInventory =
+        Str::contains($lowerName, 'ecommerce') &&
+        (Str::contains($lowerName, 'product-inventory') || Str::contains($lowerName, 'inventory'));
+@endphp
+@if (Str::lower($name) != 'pages' &&
+        Str::lower($name) != 'ads' &&
+        Str::lower($name) != 'simple sliders' &&
+        Str::lower($name) != 'media' &&
+        Str::lower($name) != 'plugins' &&
+        Str::lower($name) != 'blog' &&
+        Str::lower($name) != 'appearance' &&
+        !$isEcommerceReport &&
+        !$isEcommercetags &&
+        !$isEcommerceOptions &&
+        !$isEcommerceCollection &&
+        !$isEcommercebrands &&
+        !$isEcommerceFlashsale &&
+        !$isEcommerceDiscounts 
+       ) 
+        <!--!$isEcommerceProductAttributes -->
+<!--!$isEcommerceProductInventory &&-->
+    <a @class([
+        'nav-link' => ($isNav = $isNav ?? true),
+        'dropdown-item' => !$isNav,
+        'dropdown-toggle' => $hasChildren,
+        'nav-priority-' . $menu['priority'],
+        'active show' => $menu['active'],
+    ]) href="{{ $hasChildren ? "#$menu[id]" : $menu['url'] }}" id="{{ $menu['id'] }}"
+        @if ($hasChildren) data-bs-toggle="dropdown"
     data-bs-auto-close="{{ $autoClose ?? 'false' }}"
     role="button"
-    aria-expanded="{{ $menu['active'] ? 'true' : 'false' }}"
-    @endif
-    title="{{ $menu['title'] ?? $name }}"
-    >
-    @if (AdminAppearance::showMenuItemIcon() && $menu['icon'] !== false)
-    <span class="nav-link-icon d-md-none d-lg-inline-block" title="{{ $name }}">
-        <x-core::icon :name="$menu['icon'] ?: 'ti ti-point'" />
-    </span>
-    @endif
+    aria-expanded="{{ $menu['active'] ? 'true' : 'false' }}" @endif
+        title="{{ $menu['title'] ?? $name }}">
+        @if (AdminAppearance::showMenuItemIcon() && $menu['icon'] !== false)
+            <span class="nav-link-icon d-md-none d-lg-inline-block" title="{{ $name }}">
+                <x-core::icon :name="$menu['icon'] ?: 'ti ti-point'" />
+            </span>
+        @endif
 
-    <span @class(['nav-link-title text-truncate'])>
-        {!! $name !!}
-        {!! apply_filters(BASE_FILTER_APPEND_MENU_NAME, null, $menu['id']) !!}
-    </span>
-</a>
+        <span @class(['nav-link-title text-truncate'])>
+            {!! $name !!}
+            {!! apply_filters(BASE_FILTER_APPEND_MENU_NAME, null, $menu['id']) !!}
+        </span>
+    </a>
 @endif

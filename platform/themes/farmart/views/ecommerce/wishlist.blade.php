@@ -1,7 +1,16 @@
 @php
     Theme::set('pageTitle', __('Wishlist'));
 @endphp
-
+<style>
+    
+svg {
+    width: 40%;
+    height: 30px;
+}
+.remove-wishlist-item{
+    width:100px;
+}
+</style>
 <div class="row wishlist-page-content py-5 mt-3">
     <div class="col-12">
         @if ($products->total() && $products->loadMissing(['options', 'options.values']))

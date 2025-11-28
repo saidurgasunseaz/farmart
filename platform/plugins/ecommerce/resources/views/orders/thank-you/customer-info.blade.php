@@ -1,3 +1,8 @@
+<style>
+    .order-customer-info .order-customer-info-meta {
+    color: #10753c;
+}
+    </style>
 @php
     $orders = $order;
 

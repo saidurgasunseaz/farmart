@@ -7,12 +7,12 @@
             'originalProduct' => $originalProduct,
             'isVariation' => true,
         ])
-        <div class="variation-images">
+       {{-- <div class="variation-images">
             @include('core/base::forms.partials.images', [
                 'name' => 'images[]',
                 'values' => isset($product) ? $product->images : [],
             ])
-        </div>
+        </div> --}}
     </form>
 
     @once

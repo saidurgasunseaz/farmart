@@ -15,7 +15,7 @@
         float:left;
     }
     .form-check-label{
-        float: left;
+        /* float: left; */
     }
 </style>
 @if (Arr::get($formOptions, 'has_wrapper', 'yes') === 'yes')

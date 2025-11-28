@@ -24,7 +24,7 @@
                         </div>
                         <div class="return_product_item">
                             
-                            <a class="text" href="dashboard_return_request_details.html">
+                            <a class="text" href="{{ route('customer.order_returns.detail', $item->id) }}">
                                 <span class="return_date">Date : {{ $item->created_at->translatedFormat('M d, Y \a\t g:i A') }}</span>
                                 <span class="return_p_status d-flex">Status : <span>{!! BaseHelper::clean($item->return_status->toHtml()) !!}</span></span>
                                 <span class="return_p_quantity"> Original Order : {{ $item->order->code }}</span>

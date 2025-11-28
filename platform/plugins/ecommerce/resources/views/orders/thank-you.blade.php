@@ -1,3 +1,11 @@
+<style>
+    .thank-you svg {
+    color: #278255 !important;
+}
+.payment-checkout-btn{
+    background: #278255 !important;
+}
+    </style>
 @extends('plugins/ecommerce::orders.master')
 
 @section('title', __('Order successfully. Order number :id', ['id' => $order->code]))

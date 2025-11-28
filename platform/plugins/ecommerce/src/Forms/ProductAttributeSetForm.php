@@ -50,24 +50,24 @@ class ProductAttributeSetForm extends FormAbstract
                     'data-counter' => 120,
                 ],
             ])
-            ->add('use_image_from_product_variation', 'onOff', [
-                'label' => trans('plugins/ecommerce::product-attribute-sets.use_image_from_product_variation'),
-                'default_value' => false,
-            ])
+            // ->add('use_image_from_product_variation', 'onOff', [
+            //     'label' => trans('plugins/ecommerce::product-attribute-sets.use_image_from_product_variation'),
+            //     'default_value' => false,
+            // ])
             ->add('status', SelectField::class, StatusFieldOption::make())
             ->add('display_layout', 'customSelect', [
                 'label' => trans('plugins/ecommerce::product-attribute-sets.display_layout'),
                 'required' => true,
                 'choices' => $displayLayout,
             ])
-            ->add('is_searchable', 'onOff', [
-                'label' => trans('plugins/ecommerce::product-attribute-sets.searchable'),
-                'default_value' => false,
-            ])
-            ->add('is_comparable', 'onOff', [
-                'label' => trans('plugins/ecommerce::product-attribute-sets.comparable'),
-                'default_value' => false,
-            ])
+            // ->add('is_searchable', 'onOff', [
+            //     'label' => trans('plugins/ecommerce::product-attribute-sets.searchable'),
+            //     'default_value' => false,
+            // ])
+            // ->add('is_comparable', 'onOff', [
+            //     'label' => trans('plugins/ecommerce::product-attribute-sets.comparable'),
+            //     'default_value' => false,
+            // ])
             ->add('is_use_in_product_listing', 'onOff', [
                 'label' => trans('plugins/ecommerce::product-attribute-sets.use_in_product_listing'),
                 'default_value' => false,

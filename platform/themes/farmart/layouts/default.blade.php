@@ -1,6 +1,6 @@
 {!! Theme::partial('header') !!}
 
-<div id="main-content">
+<div id="main-content" class="bg-white">
     {!! Theme::partial('page-header', [
         'size' => Theme::get('containerSize', 'xl'),
         'withTitle' => Theme::get('withTitle', true),

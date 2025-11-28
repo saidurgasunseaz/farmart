@@ -45,11 +45,9 @@ Theme::set('bodyClass', 'single-product');
                     </div>
                 </div>
             </div>
-            <!-- Content Column -->
-            <div class="shop-detail_content-column col-lg-6 col-md-12 col-sm-12">
-                <div class="inner-column">
+            <div class="shop-detail_content-column col-lg-6 col-md-12 col-sm-12 product-details-content">
+                <div class="product-details inner-column js-product-content">
                     <h2 class="shop-detail_title">{{ $product->name }}</h2>
-                    <!-- Rating -->
                     @if (EcommerceHelper::isReviewEnabled())
                     <div class="shop-detail_rating">
                         @php
@@ -146,14 +144,9 @@ Theme::set('bodyClass', 'single-product');
                 </ul>
             </div>
         </div>
-
-
-        <!-- Lower Box -->
         <div class="lower-box">
             <div class="product-info-tabs">
                 <div class="prod-tabs tabs-box">
-
-                    {{-- Tab Buttons --}}
                     <ul class="tab-btns tab-buttons clearfix">
                         <li data-tab="#prod-info" class="tab-btn active-btn">{{ __('Description') }}</li>
 
@@ -163,43 +156,29 @@ Theme::set('bodyClass', 'single-product');
                         </li>
                         @endif
 
-                        <!-- @if(EcommerceHelper::isProductSpecificationEnabled() && $product->specificationAttributes->where('pivot.hidden', false)->isNotEmpty())
-                    <li data-tab="#prod-specification" class="tab-btn">
-                        {{ __('Specification') }}
-                    </li>
-                    @endif -->
+                        
                     </ul>
-
-                    {{-- Tabs Content --}}
                     <div class="tabs-content">
-
-                        {{-- Description Tab --}}
                         <div class="tab active-tab" id="prod-info">
                             <div class="content ck-content">
                                 {!! BaseHelper::clean($product->content) !!}
                             </div>
                         </div>
-
-                        {{-- Reviews Tab --}}
                         @if(EcommerceHelper::isReviewEnabled())
                         <div class="tab" id="prod-review">
                             @include('plugins/ecommerce::themes.includes.reviews', ['product' => $product])
                         </div>
                         @endif
-
-
-
-                    </div> {{-- end tabs-content --}}
-                </div> {{-- end prod-tabs --}}
-            </div> {{-- end product-info-tabs --}}
-        </div> {{-- end lower-box --}}
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
     
-    @if (($relatedProducts = get_related_products($product, 6)) && $relatedProducts->isNotEmpty())
+    @if (($relatedProducts = get_related_products($product, 4)) && $relatedProducts->isNotEmpty())
         <div class="related-products py-5 bg-light">
             <div class="container-xxxl">
-                <h3>{{ __('Related Products1') }}</h3>
+                <h3>{{ __('Related Products') }}</h3>
                 <div class="row clearfix">
-
                     @foreach ($relatedProducts as $relatedProduct)
                     <div class="shop-item col-lg-3 col-md-6 col-sm-12">
                     {!! Theme::partial('ecommerce.product-item', ['product' => $relatedProduct]) !!}

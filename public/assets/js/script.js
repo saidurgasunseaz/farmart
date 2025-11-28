@@ -21,15 +21,14 @@
 
   // Call the function when page is loaded
   window.addEventListener("load", handlePreloader);
-
-  //Update Header Style and Scroll to Top
+  
   function headerStyle() {
     if ($(".main-header").length) {
       var windowpos = $(window).scrollTop();
       var siteHeader = $(".main-header");
       var scrollLink = $(".scroll-to-top");
-
       var HeaderHight = $(".main-header").height();
+
       if (windowpos >= HeaderHight) {
         siteHeader.addClass("fixed-header");
         scrollLink.fadeIn(300);
@@ -40,7 +39,31 @@
     }
   }
 
-  headerStyle();
+  // Run when page loads and on scroll
+  $(window).on("scroll load", headerStyle);
+  
+
+  //Update Header Style and Scroll to Top
+//   function headerStyle() {
+//     if ($(".main-header").length) {
+//       var windowpos = $(window).scrollTop();
+//       var siteHeader = $(".main-header");
+//       var scrollLink = $(".scroll-to-top");
+
+//       var HeaderHight = $(".main-header").height();
+//       if (windowpos >= HeaderHight) {
+//         siteHeader.addClass("fixed-header");
+//         scrollLink.fadeIn(300);
+//       } else {
+//         siteHeader.removeClass("fixed-header");
+//         scrollLink.fadeOut(300);
+//       }
+//     }
+//   }
+
+//   headerStyle();
+
+
 
   //Submenu Dropdown Toggle
   if ($(".main-header li").length) {
@@ -846,24 +869,55 @@
   }
 
   //Fact Counter + Text Count
-  if ($(".count-box").length) {
-    $(".count-box").appear(
-      function () {
-        var $t = $(this),
-          n = $t.find(".count-text").attr("data-stop"),
-          r = parseInt($t.find(".count-text").attr("data-speed"), 10);
+//   if ($(".count-box").length) {
+//     $(".count-box").appear(
+//       function () {
+//         var $t = $(this),
+//           n = $t.find(".count-text").attr("data-stop"),
+//           r = parseInt($t.find(".count-text").attr("data-speed"), 10);
 
-        if (!$t.hasClass("counted")) {
+//         if (!$t.hasClass("counted")) {
+//           $t.addClass("counted");
+//           $({
+//             countNum: $t.find(".count-text").text(),
+//           }).animate(
+//             {
+//               countNum: n,
+//             },
+//             {
+//               duration: r,
+//               easing: "linear",
+//               step: function () {
+//                 $t.find(".count-text").text(Math.floor(this.countNum));
+//               },
+//               complete: function () {
+//                 $t.find(".count-text").text(this.countNum);
+//               },
+//             }
+//           );
+//         }
+//       },
+//       { accY: 0 }
+//     );
+//   }
+
+  $(document).ready(function () {
+  if ($(".count-box").length) {
+    let observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          let $t = $(entry.target);
+          if ($t.hasClass("counted")) return;
+
           $t.addClass("counted");
-          $({
-            countNum: $t.find(".count-text").text(),
-          }).animate(
-            {
-              countNum: n,
-            },
+          let n = parseInt($t.find(".count-text").attr("data-stop"), 10);
+          let r = parseInt($t.find(".count-text").attr("data-speed"), 10);
+
+          $({ countNum: 0 }).animate(
+            { countNum: n },
             {
               duration: r,
-              easing: "linear",
+              easing: "swing",
               step: function () {
                 $t.find(".count-text").text(Math.floor(this.countNum));
               },
@@ -872,11 +926,17 @@
               },
             }
           );
+
+          observer.unobserve(entry.target);
         }
-      },
-      { accY: 0 }
-    );
+      });
+    }, { threshold: 0.5 });
+
+    $(".count-box").each(function () {
+      observer.observe(this);
+    });
   }
+});
 
   //Add One Page nav
   if ($(".scroll-nav").length) {

@@ -8,22 +8,41 @@
     </div>
 </section> -->
 
+<style>
+    .btn-primary {
+        --bs-btn-color: #fff;
+        --bs-btn-bg: #10753c;
+        --bs-btn-border-color: #10753c;
+        --bs-btn-hover-color: #fff;
+        --bs-btn-hover-bg: #10753c;
+        --bs-btn-hover-border-color: #10753c;
+        --bs-btn-focus-shadow-rgb: 49, 132, 253;
+        --bs-btn-active-color: #fff;
+        --bs-btn-active-bg: #10753c;
+        --bs-btn-active-border-color: #10753c;
+        --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+        --bs-btn-disabled-color: #fff;
+        --bs-btn-disabled-bg: #10753c;
+        --bs-btn-disabled-border-color: #10753c;
+    }
+</style>
+
 <section class="shoping-cart-section">
     <div class="auto-container">
         @if (count($products) > 0)
-        <div class="row clearfix">
+        <div class="row clearfix cart-page-content">
             <div class="cart-column col-lg-8 col-md-12 col-sm-12">
                 <div class="inner-column">
                     <div class="cart-outer">
                         <div class="table-outer">
-                            <div class="row cart-page-content py-5 mt-3">
+                            <div class="row  py-5 mt-3">
                                 <div class="col-12">
                                     <form
                                         class="form--shopping-cart cart-form"
                                         method="post"
                                         action="{{ route('public.cart.update') }}">
                                         @csrf
-                                        <table class="cart-table">
+                                        <table class="cart-table cart-form__contents">
                                             <thead class="cart-header">
                                                 <tr>
                                                     <th class="prod-column">product</th>
@@ -56,9 +75,11 @@
 
                                                                 <a href="{{ $product->original_product->url }}">
                                                                     <img
-                                                                        data-src="{{ RvMedia::getImageUrl($cartItem->options->image, 'thumb', false, RvMedia::getDefaultImage()) }}"
-                                                                        src="{{ image_placeholder(RvMedia::getImageUrl($cartItem->options->image, 'thumb', false, RvMedia::getDefaultImage())) }}"
-                                                                        alt="{{ $product->original_product->name }}">
+                                                class="lazyload"
+                                                data-src="{{ RvMedia::getImageUrl($cartItem->options->image, 'thumb', false, RvMedia::getDefaultImage()) }}"
+                                                src="{{ image_placeholder(RvMedia::getImageUrl($cartItem->options->image, 'thumb', false, RvMedia::getDefaultImage())) }}"
+                                                alt="{{ $product->original_product->name }}"
+                                            >
                                                                 </a>
                                                             </figure>
 
@@ -76,7 +97,6 @@
                                                             EcommerceHelper::viewPath('includes.cart-item-options-extras'),
                                                             ['options' => $cartItem->options]
                                                             )
-                                                            <!-- <div class="prod-text">Net Weight : 500g <br> Quantity : 2</div> -->
                                                         </div>
                                                     </td>
                                                     <td class="price">{{ format_price($cartItem->price) }} @if ($product->front_sale_price != $product->price)
@@ -113,7 +133,7 @@
                                             </tbody>
                                         </table>
                                         @if (count($products) > 0)
-                                        <!-- <div class="actions my-4 pb-4 border-bottom">
+                                         {{-- <div class="actions my-4 pb-4 border-bottom">
                                             <div class="actions__button-wrapper row justify-content-between">
                                                 <div class="col-md-9">
                                                     <div class="actions__left d-grid d-md-block">
@@ -142,7 +162,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> -->
+                                        </div> 
                                         <div class="row mt-4">
                                             <div class="col-lg-12 col-md-12 col-coupon form-coupon-wrapper">
                                                 <div class="coupon">
@@ -233,7 +253,7 @@
                                                     @endif
                                                 </div>
                                             </div> -->
-                                        </div>
+                                        </div> --}}
                                         @endif
                                     </form>
                                 </div>
@@ -242,8 +262,8 @@
                     </div>
                 </div>
             </div>
-            <div class="total-column col-lg-4 col-md-12 col-sm-12">
-                <div class="inner-column">
+            <div class="total-column col-lg-4 col-md-12 col-sm-12 ">
+                <div class="inner-column col-12">
                     <div class="cart-total-outer">
                         <div class="title-box">
                             <h6>Cart Totals</h6>
@@ -287,7 +307,7 @@
                                 </li>
                                 @endif
                                 <li>Totals : <span>{{ $promotionDiscountAmount + $couponDiscountAmount > Cart::instance('cart')->rawTotal() ? format_price(0) : format_price(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount) }}</span></li>
-                                <!-- <li>
+                                 <li>
                                     @if (session('tracked_start_checkout'))
                                     <div class="proceed-to-checkout">
                                         <div class="d-grid gap-2">
@@ -297,24 +317,24 @@
                                         </div>
                                     </div>
                                     @endif
-                                </li> -->
+                                </li>
                             </ul>
-                            <!-- <div class="check-box">
-                                <input type="checkbox" name="remember-password" id="type-1">
-                                <label for="type-1">Shipping & taxes calculated at checkout</label>
-                            </div> -->
-                            @if (session('tracked_start_checkout'))
-                            <div class="buttons-box">
-                                <button type="submit" class="theme-btn btn-style-one">
-                                    <span class="btn-wrap">
-                                        <a href="{{ route('public.checkout.information', session('tracked_start_checkout')) }}"><span class="text-one">proceed now <i
-                                                    class="fas fa-arrow-right fa-fw"></i></span></a>
-                                        <a href="{{ route('public.checkout.information', session('tracked_start_checkout')) }}"><span class="text-two">proceed now <i
-                                                    class="fas fa-arrow-right fa-fw"></i></span></a>
-                                    </span>
-                                </button>
-                            </div>
-                            @endif
+                            <!-- <div class="check-box">-->
+                            <!--    <input type="checkbox" name="remember-password" id="type-1">-->
+                            <!--    <label for="type-1">Shipping & taxes calculated at checkout</label>-->
+                            <!--</div> -->
+                            <!--@if (session('tracked_start_checkout'))-->
+                            <!--<div class="buttons-box">-->
+                            <!--    <button type="submit" class="theme-btn btn-style-one">-->
+                            <!--        <span class="btn-wrap">-->
+                            <!--            <a href="{{ route('public.checkout.information', session('tracked_start_checkout')) }}"><span class="text-one">proceed now <i-->
+                            <!--                        class="fas fa-arrow-right fa-fw"></i></span></a>-->
+                            <!--            <a href="{{ route('public.checkout.information', session('tracked_start_checkout')) }}"><span class="text-two">proceed now <i-->
+                            <!--                        class="fas fa-arrow-right fa-fw"></i></span></a>-->
+                            <!--        </span>-->
+                            <!--    </button>-->
+                            <!--</div>-->
+                            <!--@endif-->
                         </div>
                     </div>
                     <!-- <div class="shipping-outer">

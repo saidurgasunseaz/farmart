@@ -1,9 +1,12 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html {{ html_attributes }}>
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>{{ 'plugins/ecommerce::order.invoice_for_order'|trans }} {{ invoice.code }}</title>
+
     {{ settings.font_css }}
+
     <style>
         {{ invoice_css | raw }}
 
@@ -13,20 +16,36 @@
 
         {{ settings.extra_css }}
     </style>
+
     {{ settings.header_html }}
 
     {{ invoice_header_filter | raw }}
 </head>
-<body>
-    <table class="invoice-info-container">
+<body {{ body_attributes }}>
+
+{{ invoice_body_filter | raw }}
+
+{% if (get_ecommerce_setting('enable_invoice_stamp', 1) == 1) %}
+    {% if invoice.status == 'canceled' %}
+        <div class="stamp is-failed">
+            {{ invoice.status }}
+        </div>
+    {% elseif (payment_status_label) %}
+        <div class="stamp {% if payment_status == 'completed' %} is-completed {% else %} is-failed {% endif %}">
+            {{ payment_status_label }}
+        </div>
+    {% endif %}
+{% endif %}
+
+<table class="invoice-info-container">
     <tr>
         <td>
             <div class="logo-container">
-           {% if logo %}
+                {% if logo %}
                     <img src="{{ logo_full_path }}" style="width:100%; max-width:150px;" alt="site_title">
                 {% endif %}
-        </div>
-         </td>
+            </div>
+        </td>
         <td>
             {% if invoice.created_at %}
                 <p>
@@ -44,7 +63,7 @@
         </td>
     </tr>
 </table>
-<h3>Bill To
+
 <table class="invoice-info-container">
     <tr>
         <td>
@@ -88,7 +107,7 @@
     </tr>
 </table>
 
-    {% if invoice.description %}
+{% if invoice.description %}
     <table class="invoice-info-container">
         <tr style="text-align: left">
             <td style="text-align: left">
@@ -98,38 +117,54 @@
     </table>
 {% endif %}
 
-
-<div class="invoice_table">
-                    <div class="table-responsive ">
-                        <table class="table line-items-container">
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                             
-                                {% for item in invoice.items %}
-                                <tr>
-                                    <td>
-                                        {% if logo %}
-                    <img src="{{ logo_full_path }}" style="width:60px; max-width:150px;" alt="site_title">
+<table class="line-items-container">
+    <thead>
+    <tr>
+        <th class="heading-description">{{ 'plugins/ecommerce::products.form.product'|trans }}</th>
+        <th class="heading-options"></th>
+        <th class="heading-quantity">{{ 'plugins/ecommerce::products.form.quantity'|trans }}</th>
+        <th class="heading-price">{{ 'plugins/ecommerce::products.form.price'|trans }}</th>
+        {% if has_multiple_products %}
+            <th class="heading-tax">{{ 'plugins/ecommerce::products.form.tax'|trans }}</th>
+        {% endif %}
+        <th class="heading-subtotal">{{ 'plugins/ecommerce::products.form.total'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in invoice.items %}
+        <tr class="product-row">
+            <td class="product-cell">
+                <div class="product-name">{{ item.name }}</div>
+                {% if item.options.sku %}
+                    <div class="product-sku">SKU: {{ item.options.sku }}</div>
                 {% endif %}
-                                    </td>
+            </td>
+            <td class="options-cell">
+                
+            </td>
+            <td class="qty-cell">{{ item.qty }}</td>
+            <td class="price-cell">{{ item.price|price_format }}</td>
+            {% if has_multiple_products %}
+                <td class="tax-cell options-cell">
+                    {% if item.tax_amount > 0 %}
+                        <div class="tax-amount">{{ item.tax_amount|price_format }}</div>
+                        {% if item.options.taxClasses %}
+                            <div class="tax-details">
+                                {% for taxName, taxRate in item.options.taxClasses %}
+                                    <span class="tax-class">{{ taxName }} ({{ taxRate }}%)</span>{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <span class="text-muted">-</span>
+                    {% endif %}
+                </td>
+            {% endif %}
+            <td class="total-cell">{{ item.sub_total|price_format }}</td>
+        </tr>
+    {% endfor %}
 
-                                    <td>
-                                       {{ item.name }} <br> ({{ item.options.sku }})
-                                    </td>
-                                    <td>{{ item.price|price_format }}</td>
-                                    <td>{{ item.qty }}</td>
-                                    <td>{{ item.sub_total|price_format }}</td>
-                                </tr>
-                                 {% endfor %}
-                                 <tr>
+    <tr>
         <td colspan="{% if has_multiple_products %}5{% else %}4{% endif %}" class="right">
             {{ 'plugins/ecommerce::invoice.detail.quantity'|trans }}
         </td>
@@ -203,13 +238,8 @@
             </td>
         </tr>
     {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-   
-
-
+    </tbody>
+</table>
 
 <table class="line-items-container">
     <thead>
@@ -245,10 +275,6 @@
     </tr>
     </tbody>
 </table>
-
-
-    <div class="invoice-footer">
-        <p>Thanks for your purchase!</p>
-    </div>
+{{ ecommerce_invoice_footer | raw }}
 </body>
 </html>

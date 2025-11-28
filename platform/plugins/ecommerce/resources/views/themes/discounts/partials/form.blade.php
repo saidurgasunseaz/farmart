@@ -1,3 +1,22 @@
+<style>
+   .checkout__coupon-heading {
+color: rgb(16, 117, 60) !important;
+border: 1px solid #10753c;
+    }
+.address-item.is-default{
+   border: 1px solid #10753c; 
+}
+    h4, .default{
+      color: rgb(16, 117, 60) !important;
+/* border: 1px solid #10753c;   */
+    }
+    .checkout__coupon-item-code button{
+       background: rgb(16, 117, 60) !important; 
+    }
+    .checkout__coupon-list{
+        border: 1px dashed #10753c;
+    }
+    </style>
 @if ($discounts->isNotEmpty())
     {{-- Desktop Coupon Section --}}
     <div class="checkout__coupon-section d-none d-md-block">

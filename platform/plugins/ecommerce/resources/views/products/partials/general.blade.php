@@ -148,11 +148,11 @@
         class="input-mask-number"
     />
 
-    <x-core::form.on-off.checkbox
+    {{-- <x-core::form.on-off.checkbox
         :label="trans('plugins/ecommerce::products.form.stock.allow_order_when_out')"
         name="allow_checkout_when_out_of_stock"
         :checked="old('allow_checkout_when_out_of_stock', $product ? $product->allow_checkout_when_out_of_stock : $originalProduct->allow_checkout_when_out_of_stock ?? 0) == 1"
-    />
+    /> --}}
 </x-core::form.fieldset>
 
 <x-core::form.fieldset class="stock-status-wrapper" @style(['display: none' => old('with_storehouse_management', $product ? $product->with_storehouse_management : $originalProduct->with_storehouse_management ?? 0) == 1])>

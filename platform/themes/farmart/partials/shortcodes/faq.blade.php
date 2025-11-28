@@ -1,4 +1,69 @@
-<div class="container">
+ <div class="bg-white">
+ <div class="faq-container bg-white">
+     <div class="faq-header mb-0">
+         <h2>Frequently Asked Questions</h2>
+         <p>Find answers to common questions about our Moringa products and services</p>
+     </div>
+     <?php
+     use Illuminate\Support\Str;
+     $faq_categories = DB::table('faq_categories')->get();
+     ?>
+     <div class="faq-tabs">
+         @foreach ($faq_categories as $index => $faq_category)
+             <button class="tab-btn {{ $index === 0 ? 'active' : '' }}"
+                 data-tab="{{ Str::slug($faq_category->name, '-') }}">
+                 <i class="fas fa-shipping-fast"></i>
+                 <?php echo  $faq_category->name ; ?>
+             </button>
+         @endforeach
+     </div>
+
+     <div class="faq-content">
+         @foreach ($faq_categories as $index => $faq_category)
+             @php
+                 $faqs = DB::table('faqs')->where('category_id', $faq_category->id)->get();
+             @endphp
+
+             <div class="tab-content {{ $index === 0 ? 'active' : '' }}" id="{{ Str::slug($faq_category->name, '-') }}-tab">
+                 <div class="faq-items">
+                     <h2 class="tab-title"><?php echo  $faq_category->name ; ?></h2>
+
+                     @foreach ($faqs as $index => $faq)
+                         <div class="faq-item ">
+                             <div class="faq-question">
+                                 <h3>{{ $faq->question }}</h3>
+                                 <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                             </div>
+                             <div class="faq-answer {{ $index === 0 ? 'active' : '' }}" >
+                                 {{ $faq->answer }}
+                             </div>
+                         </div>
+                     @endforeach
+                 </div>
+             </div>
+         @endforeach
+
+         <div class="contact-support">
+             <h3>Still have questions?</h3>
+             <p>
+                 Our customer support team is here to help you with any questions about our
+                 Moringa products and services.
+             </p>
+             <div class="support-buttons">
+                 <a href="tel:+91 9090-7070-85" class="support-btn">
+                     <i class="fas fa-phone"></i>
+                     Call Support
+                 </a>
+                 <a href="mailto:tetraelements@gmail.com" class="support-btn secondary">
+                     <i class="fas fa-envelope"></i>
+                     Email Us
+                 </a>
+             </div>
+         </div>
+     </div>
+ </div>
+</div>
+ {{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col">
             @if ($title)
@@ -63,4 +128,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}

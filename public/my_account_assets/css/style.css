@@ -81,7 +81,12 @@ span {
     margin: 0;
     color: var(--paraColor);
 }
-
+.counter-one span{
+     font-size: 40px;
+    /* font-weight: 400; */
+    margin: 0;
+    color: #1f1e17;
+}
 body {
     overflow-x: hidden;
     scroll-behavior: smooth;

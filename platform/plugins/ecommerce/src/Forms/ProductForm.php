@@ -91,17 +91,17 @@ class ProductForm extends FormAbstract
                 'label' => trans('plugins/ecommerce::products.form.image'),
                 'values' => $productId ? $this->getModel()->images : [],
             ])
-            ->addMetaBoxes([
-                'with_related' => [
-                    'title' => null,
-                    'content' => Html::tag('div', '', [
-                        'class' => 'wrap-relation-product',
-                        'data-target' => route('products.get-relations-boxes', $productId ?: 0),
-                    ]),
-                    'wrap' => false,
-                    'priority' => 9999,
-                ],
-            ])
+            // ->addMetaBoxes([
+            //     'with_related' => [
+            //         'title' => null,
+            //         'content' => Html::tag('div', '', [
+            //             'class' => 'wrap-relation-product',
+            //             'data-target' => route('products.get-relations-boxes', $productId ?: 0),
+            //         ]),
+            //         'wrap' => false,
+            //         'priority' => 9999,
+            //     ],
+            // ])
             ->when(! EcommerceHelper::isDisabledPhysicalProduct(), function (): void {
                 $this->add('product_type', 'hidden', [
                     'value' => request()->input('product_type') ?: ProductTypeEnum::PHYSICAL,
@@ -143,28 +143,28 @@ class ProductForm extends FormAbstract
                 MediaImageFieldOption::make()
                     ->label(trans('plugins/ecommerce::products.form.featured_image'))
             )
-            ->when($productCollections, function () use ($productCollections): void {
-                $selectedProductCollections = [];
+            // ->when($productCollections, function () use ($productCollections): void {
+            //     $selectedProductCollections = [];
 
-                /**
-                 * @var Product $product
-                 */
-                $product = $this->getModel();
+            //     /**
+            //      * @var Product $product
+            //      */
+            //     $product = $this->getModel();
 
-                if ($product && $product->getKey()) {
-                    $selectedProductCollections = $product
-                        ->productCollections()
-                        ->pluck('product_collection_id')
-                        ->all();
-                }
+            //     if ($product && $product->getKey()) {
+            //         $selectedProductCollections = $product
+            //             ->productCollections()
+            //             ->pluck('product_collection_id')
+            //             ->all();
+            //     }
 
-                $this
-                    ->add('product_collections[]', MultiCheckListField::class, [
-                        'label' => trans('plugins/ecommerce::products.form.collections'),
-                        'choices' => $productCollections,
-                        'value' => old('product_collections', $selectedProductCollections),
-                    ]);
-            })
+            //     $this
+            //         ->add('product_collections[]', MultiCheckListField::class, [
+            //             'label' => trans('plugins/ecommerce::products.form.collections'),
+            //             'choices' => $productCollections,
+            //             'value' => old('product_collections', $selectedProductCollections),
+            //         ]);
+            // })
             ->when($productLabels, function () use ($productLabels): void {
                 $selectedProductLabels = [];
 
@@ -239,14 +239,14 @@ class ProductForm extends FormAbstract
                             ->defaultValue(0)
                     );
             })
-            ->add('tag', TagField::class, [
-                'label' => trans('plugins/ecommerce::products.form.tags'),
-                'value' => $tags,
-                'attr' => [
-                    'placeholder' => trans('plugins/ecommerce::products.form.write_some_tags'),
-                    'data-url' => route('product-tag.all'),
-                ],
-            ])
+            // ->add('tag', TagField::class, [
+            //     'label' => trans('plugins/ecommerce::products.form.tags'),
+            //     'value' => $tags,
+            //     'attr' => [
+            //         'placeholder' => trans('plugins/ecommerce::products.form.write_some_tags'),
+            //         'data-url' => route('product-tag.all'),
+            //     ],
+            // ])
             ->setBreakFieldPoint('status');
 
         if (EcommerceHelper::isProductSpecificationEnabled()) {
